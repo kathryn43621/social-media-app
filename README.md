@@ -1,20 +1,24 @@
-# Install
+## Social Media App
 
-`npm install`
+Full stack social media app where you can connect with people around the world.
 
----
+Link to project: 
 
-# Things to add
 
-- Create a `.env` file in config folder and add the following as `key = value`
-  - PORT = 2121 (can be any port example: 3000)
-  - DB_STRING = `your database URI`
-  - CLOUD_NAME = `your cloudinary cloud name`
-  - API_KEY = `your cloudinary api key`
-  - API_SECRET = `your cloudinary api secret`
+## How It's Made:
 
----
+Tech used: HTML, CSS, JavaScript, MVC Framework, Express, Node.js
 
-# Run
+Functionality: 
+- Feed: share and see photos from your social network
+- Comment: make a comment to interact with your friends
 
-`npm start`
+
+
+Optimizations
+
+(optional)
+
+
+## Lessons Learned:
+
