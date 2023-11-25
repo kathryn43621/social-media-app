@@ -1,21 +1,28 @@
 <%- include('partials/header') -%>
+
+<!-- View the single post -->
 <div class="container">
-  <div class="row justify-content-center mt-5">
+  <div class="row justify-content-start mt-5">
     <div class="col-6">
-      <h2><%= post.title %></h2>
-      <img class="img-fluid" src="<%= post.image%>" />
-      <div class="row justify-content-between">
+      <h2 class="text-center"><%=post.title%></h2>
+      <img class="img-fluid" src="<%=post.image%>" />
+      <p class="fw-bold py-3"><%= post.caption %></p>
+
+      <!-- Like the post -->
+      <div class="row justify-content-start">
         <form
           class="col-1"
           action="/post/likePost/<%= post.id %>?_method=PUT"
           method="POST"
         >
-          <button class="btn btn-primary fa fa-heart" type="submit"></button>
+          <button class="btn btn-danger fa fa-heart" type="submit"></button>
         </form>
-        <h3 class="col-3">Likes: <%= post.likes %></h3>
+        <h5 class="col-3 px-3"><%= post.likes %> Likes</h5>
+
+        <!-- Delete the post -->
         <%if(post.user == user.id){ %>
         <form
-          action="/post/deletePost/<%= post.id %>?_method=DELETE"
+          action="/post/deletePost/<%=post.id%>?_method=DELETE"
           method="POST"
           class="col-3"
         >
@@ -24,12 +31,60 @@
         <%}%>
       </div>
     </div>
-    <div class="col-3 mt-5">
-      <p><%= post.caption %></p>
-    </div>
+
+    <!-- Add a comment -->
     <div class="col-6 mt-5">
-      <a class="btn btn-primary" href="/profile">Return to Profile</a>
-      <a class="btn btn-primary" href="/feed">Return to Feed</a>
+      <h3>Add a comment</h3>
+      <form action="/comment/createComment/<%=post._id%>" method="POST">
+        <div class="mb-3">
+          <input
+            type="text"
+            class="form-control"
+            id="comment"
+            name="comment"
+            placeholder="Comment..."
+          />
+          <button type="submit" class="btn btn-primary my-3">Submit</button>
+        </div>
+      </form>
+
+      <!-- Show all comments -->
+      <div class="mt-5">
+        <ul>
+          <% for (var i = 0; i < comments.length; i++) { %>
+          <li class="col-6 justify-content-between mt-5">
+            <div class="row">
+              <!-- User name & their comment-->
+              <div class="col-auto">
+                <p>
+                  <%=comments[i].createdBy%> says: "<%=
+                  comments[i].comment %>""
+                </p>
+              </div>
+              <!-- Delete comment button-->
+              <%if (user.id == comments[i].createdById) { %>
+              <form
+                action="/comment/deleteComment/<%= post.id %>/<%= comments[i]._id%>?_method=DELETE"
+                method="POST"
+                class="col-3"
+              >
+                <button
+                  class="btn btn-outline-danger fa fa-trash"
+                  type="submit"
+                ></button>
+              </form>
+              <%}%>
+            </div>
+          </li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Buttons to return to profile & feed -->
+    <div class="col-12 text-center mx-auto my-5">
+      <a class="btn btn-primary" href="/profile">My Profile</a>
+      <a class="btn btn-primary" href="/feed">My Feed</a>
     </div>
   </div>
 </div>
